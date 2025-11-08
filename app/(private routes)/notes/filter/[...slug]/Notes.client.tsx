@@ -1,7 +1,7 @@
 'use client';
 import css from './NotesPage.module.css';
 import { useState, useEffect } from 'react';
-import { fetchNotes, type NotesHttpResponse } from '@/lib/api';
+import { fetchNotes, type NotesHttpResponse } from '@/lib/api/clientApi';
 import Pagination from '@/components/Pagination/Pagination';
 import NoteList from '@/components/NoteList/NoteList';
 import SearchBox from '@/components/SearchBox/SearchBox';
@@ -29,7 +29,7 @@ export default function NotesClient({ tag }: NotesClientProps) {
   }, [tag]);
 
   const { data, isLoading, isError } = useQuery<NotesHttpResponse>({
-    queryKey: ['notes', currentPage, debouncedSearch, tag, PER_PAGE],
+    queryKey: ['notes', currentPage, PER_PAGE, debouncedSearch, tag],
     queryFn: () =>
       fetchNotes({
         page: currentPage,
